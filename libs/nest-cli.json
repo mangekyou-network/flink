@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "my-action": {
+      "type": "library",
+      "root": "libs/my-action",
+      "entryFile": "index",
+      "sourceRoot": "libs/my-action/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/my-action/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

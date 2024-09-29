@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "plugins": [
+      "@nestjs/swagger"
+    ]
+  },
+  "projects": {
+    "utils": {
+      "type": "library",
+      "root": "libs/utils",
+      "entryFile": "index",
+      "sourceRoot": "libs/utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/utils/tsconfig.lib.json"
+      }
+    },
+    "buy-me-a-coffee": {
+      "type": "library",
+      "root": "libs/buy-me-a-coffee",
+      "entryFile": "index",
+      "sourceRoot": "libs/buy-me-a-coffee/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/buy-me-a-coffee/tsconfig.lib.json"
+      }
+    },
+    "red-envelop": {
+      "type": "library",
+      "root": "libs/red-envelop",
+      "entryFile": "index",
+      "sourceRoot": "libs/red-envelop/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/red-envelop/tsconfig.lib.json"
+      }
+    },
+    "split-bill": {
+      "type": "library",
+      "root": "libs/split-bill",
+      "entryFile": "index",
+      "sourceRoot": "libs/split-bill/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/split-bill/tsconfig.lib.json"
+      }
+    },
+    "registry": {
+      "type": "library",
+      "root": "libs/registry",
+      "entryFile": "index",
+      "sourceRoot": "libs/registry/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/registry/tsconfig.lib.json"
+      }
+    }
+  }
+}
