@@ -54,6 +54,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/registry/tsconfig.lib.json"
       }
+    },
+    "my-test-action": {
+      "type": "library",
+      "root": "libs/my-test-action",
+      "entryFile": "index",
+      "sourceRoot": "libs/my-test-action/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/my-test-action/tsconfig.lib.json"
+      }
     }
   }
 }

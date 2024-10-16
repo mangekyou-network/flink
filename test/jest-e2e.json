@@ -1,5 +1,9 @@
 {
-  "moduleFileExtensions": ["js", "json", "ts"],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
   "rootDir": ".",
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
@@ -9,13 +13,11 @@
   "moduleNameMapper": {
     "@action/utils/(.*)": "<rootDir>/../libs/utils/src/$1",
     "@action/utils": "<rootDir>/../libs/utils/src",
-    "@action/buy-me-a-coffee/(.*)": "<rootDir>/../libs/buy-me-a-coffee/src/$1",
-    "@action/buy-me-a-coffee": "<rootDir>/../libs/buy-me-a-coffee/src",
-    "@action/red-envelope/(.*)": "<rootDir>/../libs/red-envelope/src/$1",
-    "@action/red-envelope": "<rootDir>/../libs/red-envelope/src",
     "@action/split-bill/(.*)": "<rootDir>/../libs/split-bill/src/$1",
     "@action/split-bill": "<rootDir>/../libs/split-bill/src",
     "@action/registry/(.*)": "<rootDir>/../libs/registry/src/$1",
-    "@action/registry": "<rootDir>/../libs/registry/src"
+    "@action/registry": "<rootDir>/../libs/registry/src",
+    "@app/my-test-action/(.*)": "<rootDir>/../libs/my-test-action/src/$1",
+    "@app/my-test-action": "<rootDir>/../libs/my-test-action/src"
   }
 }

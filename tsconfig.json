@@ -20,19 +20,52 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@types/*": ["types/*"],
-      "@action/utils": ["libs/utils/src"],
-      "@action/utils/*": ["libs/utils/src/*"],
-      "@action/buy-me-a-coffee": ["libs/buy-me-a-coffee/src"],
-      "@action/buy-me-a-coffee/*": ["libs/buy-me-a-coffee/src/*"],
-      "@action/cross-chain-swap": ["libs/cross-chain-swap/src"],
-      "@action/cross-chain-swap/*": ["libs/cross-chain-swap/src/*"],
-      "@action/red-envelope": ["libs/red-envelope/src"],
-      "@action/red-envelope/*": ["libs/red-envelope/src/*"],
-      "@action/slipt-bill": ["libs/split-bill/src"],
-      "@action/slipt-bill/*": ["libs/split-bill/src/*"],
-      "@action/registry": ["libs/registry/src", "libs/registry/src/index.ts"],
-      "@action/registry/*": ["libs/registry/src/*"]
+      "@types/*": [
+        "types/*"
+      ],
+      "@action/utils": [
+        "libs/utils/src"
+      ],
+      "@action/utils/*": [
+        "libs/utils/src/*"
+      ],
+      "@action/buy-me-a-coffee": [
+        "libs/buy-me-a-coffee/src"
+      ],
+      "@action/buy-me-a-coffee/*": [
+        "libs/buy-me-a-coffee/src/*"
+      ],
+      "@action/cross-chain-swap": [
+        "libs/cross-chain-swap/src"
+      ],
+      "@action/cross-chain-swap/*": [
+        "libs/cross-chain-swap/src/*"
+      ],
+      "@action/red-envelope": [
+        "libs/red-envelope/src"
+      ],
+      "@action/red-envelope/*": [
+        "libs/red-envelope/src/*"
+      ],
+      "@action/slipt-bill": [
+        "libs/split-bill/src"
+      ],
+      "@action/slipt-bill/*": [
+        "libs/split-bill/src/*"
+      ],
+      "@action/registry": [
+        "libs/registry/src",
+        "libs/registry/src/index.ts"
+      ],
+      "@action/registry/*": [
+        "libs/registry/src/*"
+      ],
+      "@app/my-test-action": [
+        "libs/my-test-action/src"
+      ],
+      "@app/my-test-action/*": [
+        "libs/my-test-action/src/*"
+      ]
     }
   }
 }
