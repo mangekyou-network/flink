@@ -333,6 +333,7 @@ Before running the project, you need to run PostgreSQL locally. You also need to
 Start the project using the following command:
 
 ```shell
+psql --command='create database "flink-instant-url"'
 npm run migration:run  # create the database tables if you haven't done it before
 npm run start  # start the project
 ```

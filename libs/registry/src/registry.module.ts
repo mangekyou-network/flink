@@ -1,13 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { CrossChainSwapService } from '@action/cross-chain-swap';
-
 import { RegistryService } from './registry.service';
 
 @Module({
-  imports: [
-    CrossChainSwapService,
-  ],
+  imports: [],
   providers: [RegistryService],
   exports: [RegistryService],
 })
