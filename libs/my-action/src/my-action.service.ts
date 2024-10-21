@@ -2,18 +2,26 @@ import { Provider, Wallet, Contract, bn, JsonAbi } from 'fuels';
 import contractIds from './sway-api/contract-ids.json';
 import { Injectable } from '@nestjs/common';
 import {
-    Action,
+    Action as ActionDto,
     ActionMetadata,
     GenerateTransactionParams,
     TransactionInfo,
 } from 'src/common/dto';
+import {
+    TransactionResult,
+    browserConfig,
+    metadata,
+    providerConfig,
+} from './config';
+import { RegistryPlug } from '@action/registry';
 
 type FormName = 'amount' | 'tokenAddress' | 'to';
 
+@RegistryPlug('buy-a-fuel-can', 'v1')
 @Injectable()
-export class BuyMeAFuelCanService extends Action<FormName> {
-    getMetadata(): Promise<ActionMetadata<FormName>> {
-        throw new Error('Method not implemented.');
+export class BuyMeAFuelCanService extends ActionDto<FormName> {
+    async getMetadata(): Promise<ActionMetadata<FormName>> {
+        return metadata as unknown as ActionMetadata<FormName>;
     }
 
     async generateTransaction(
