@@ -1,104 +1,78 @@
-import { Provider, Wallet, Contract, bn, JsonAbi } from 'fuels';
-import contractIds from './sway-api/contract-ids.json';
 import { Injectable } from '@nestjs/common';
+import { connect, keyStores, Near, Contract, utils } from 'near-api-js';
 import {
     Action as ActionDto,
     ActionMetadata,
     GenerateTransactionParams,
     TransactionInfo,
 } from 'src/common/dto';
-import {
-    TransactionResult,
-    browserConfig,
-    metadata,
-    providerConfig,
-} from './config';
 import { RegistryPlug } from '@action/registry';
+import { metadata } from './config';
 
-type FormName = 'amount' | 'tokenAddress' | 'to';
+type FieldTypes = "value" | "token" | "recipient";
 
-@RegistryPlug('buy-a-fuel-can', 'v1')
+@RegistryPlug('buy-me-a-coffee', 'v1')
 @Injectable()
-export class BuyMeAFuelCanService extends ActionDto<FormName> {
-    async getMetadata(): Promise<ActionMetadata<FormName>> {
-        return metadata as unknown as ActionMetadata<FormName>;
+export class BuyMeAFuelCanService extends ActionDto<FieldTypes> {
+    async getMetadata(): Promise<ActionMetadata<FieldTypes>> {
+        return metadata as unknown as ActionMetadata<FieldTypes>;
     }
 
     async generateTransaction(
-        data: GenerateTransactionParams<FormName>,
+        data: GenerateTransactionParams<FieldTypes>,
     ): Promise<TransactionInfo[]> {
         const { additionalData, formData } = data;
         const { chainId, account } = additionalData;
         if (!account) {
             throw new Error('Missing account!');
         }
-        const { amount, tokenAddress, to } = formData;
+        const { value, token, recipient } = formData;
 
-        const provider = await Provider.create('http://127.0.0.1:4000/graphql');
-        const wallet = Wallet.fromPrivateKey(account, provider);
+        const near = await connect({
+            networkId: 'testnet', // hoặc 'mainnet'
+            keyStore: new keyStores.InMemoryKeyStore(),
+            nodeUrl: 'https://rpc.testnet.near.org',
+        });
 
-        // Đảm bảo rằng bạn có ABI cho contract này
-        const _abi: JsonAbi = {
-            specVersion: "0.1.0",
-            encodingVersion: "0.1.0",
-            programType: "Contract",
-            concreteTypes: [],
-            metadataTypes: [],
-            "functions": [
+        const wallet = await near.account(account);
+
+        const amountInYocto = utils.format.parseNearAmount(value);
+
+        let txInfo: TransactionInfo;
+
+        if (token !== '') {
+            const contract = new Contract(
+                wallet,
+                token, 
                 {
-                    "inputs": [],
-                    "name": "counter",
-                    "output": "",
-                    "attributes": [
-                        {
-                            "name": "storage",
-                            "arguments": [
-                                "read"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "inputs": [],
-                    "name": "increment",
-                    "output": "",
-                    "attributes": [
-                        {
-                            "name": "storage",
-                            "arguments": [
-                                "read",
-                                "write"
-                            ]
-                        }
-                    ]
+                    viewMethods: ['ft_balance_of', 'ft_metadata'],
+                    changeMethods: ['ft_transfer'],
+                    useLocalViewExecution: true
                 }
-            ],
-            "loggedTypes": [],
-            "messagesTypes": [],
-            "configurables": []
-        }
-        const contract = new Contract(contractIds.testContract, _abi, wallet);
+            );
 
-        // const decimalsResult = await contract.functions.decimals().call();
-        // const decimals = decimalsResult.value as number;
-        const amountToSend = bn(amount).mul(bn(10).pow(18));
-
-        let transferTx: { to: string; data: string };
-
-        if (tokenAddress !== '') {
-            const transferResponse = await contract.functions.transfer(to, amountToSend).call();
-            transferTx = { to, data: transferResponse.transactionId };
+            txInfo = {
+                chainId,
+                to: token,
+                value: '0',
+                data: JSON.stringify({
+                    method: 'ft_transfer',
+                    args: {
+                        receiver_id: recipient,
+                        amount: amountInYocto,
+                    },
+                }),
+                shouldPublishToChain: true,
+            };
         } else {
-            transferTx = { to, data: '' };
+            txInfo = {
+                chainId,
+                to: recipient,
+                value: amountInYocto || '0',
+                data: '',
+                shouldPublishToChain: true,
+            };
         }
-
-        const txInfo: TransactionInfo = {
-            chainId: provider.getChainId(),
-            to: transferTx.to,
-            value: tokenAddress === '' ? bn(amount).toString() : '0',
-            data: transferTx.data,
-            shouldPublishToChain: true,
-        };
 
         return [txInfo];
     }
